@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio & Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://files.catbox.moe/urgmga.jpg">
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: transparent;
+      color: white;
+      height: 100%;
+      overflow: hidden;
+    }
+    .bg-image {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://files.catbox.moe/4xnkqm.jpg') center/cover no-repeat;
+      z-index: -1;
+    }
+    .wrapper {
+      height: 100vh; width: 100vw;
+      display: flex; justify-content: center; align-items: center;
+      overflow: hidden; position: relative;
+    }
+    .container {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 32px 24px;
+      max-width: 900px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      width: 100%;
+      max-height: 95vh;
+      overflow-y: auto;
+    }
+    .btn {
+      display: block;
+      width: 100%; max-width: 320px;
+      margin: 12px auto; padding: 14px 20px;
+      background-image: radial-gradient(circle at 10% 20%, #00f7ff 0%, #00111a 100%);
+      color: #a7faff;
+      font-weight: 600; font-size: 16px;
+      border: 2px solid #00f7ff;
+      border-radius: 16px;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .breathing {
+      animation: breathe 2.5s infinite ease-in-out;
+    }
+    @keyframes breathe {
+      0% { box-shadow: 0 0 12px #00f7ff; }
+      50% { box-shadow: 0 0 32px #00f7ff; }
+      100% { box-shadow: 0 0 12px #00f7ff; }
+    }
+    .pp {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 3px solid #06b6d4;
+      margin: 0 auto 12px;
+    }
+    input {
+      padding: 12px; border-radius: 10px;
+      border: none; font-size: 15px;
+      width: 100%; max-width: 320px;
+      margin: 12px auto; text-align: center;
+    }
+    .floating-btn {
+      position: fixed; top: 24px;
+      width: 60px; height: 60px;
+      background: #0ff0fc; border: none;
+      border-radius: 50%;
+      font-size: 24px; font-weight: bold;
+      color: #0f172a;
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.3);
+      z-index: 99;
+    }
+    .theme-floating { left: 24px; }
+    .music-floating { right: 24px; }
+    .card, .qris-section, #halamanMenuProduk, #subProdukSection {
+      display: none;
+    }
+    .show { display: block !important; }
+    .fade {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .qris {
+      width: 100%;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+    #typingText {
+      color: #67e8f9;
+      font-weight: bold;
+      margin-top: 8px;
+      font-size: 15px;
+      height: 24px;
+    }
+    body.light-mode {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    body.light-mode .container {
+      background: rgba(255, 255, 255, 0.85);
+      color: #0f172a;
+    }
+    body.light-mode .btn {
+      background-image: radial-gradient(circle at 10% 20%, #0ea5e9 0%, #cbd5e1 100%);
+      color: #0f172a;
+      border-color: #0ea5e9;
+    }
+    body.light-mode #typingText {
+      color: #0ea5e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-image"></div>
+  <div class="wrapper">
+    <div class="container">
+      <div id="portofolio" class="show fade">
+        <img src="https://files.catbox.moe/urgmga.jpg" class="pp" alt="PP">
+        <h2>👨‍💻 Alien Labrador</h2>
+        <p>Developer | Bot Specialist | Creator</p>
+        <p>Haloo perkenalkan Nama aku Alien disini saya mau Kasih tau nih bahwa alien mempunyai produk digital supaya lebih ringan dalam memberikan informasi</p>
+        <input type="text" id="namaPembeli" placeholder="Masukkan nama Anda" oninput="showTypingText()">
+        <div id="typingText"></div>
+        <button id="lanjutBtn" class="btn" onclick="lanjutkanNama()" style="display:none;">➡️ Lanjut</button>
+      </div>
+
+      <div id="halamanMenuProduk">
+        <div id="produkTabs" class="card show"></div>
+        <div id="subProdukSection" class="card">
+          <div id="tabContent"></div>
+          <button class="btn" onclick="kembaliKeKategori()">🔙 Kembali ke Kategori</button>
+        </div>
+      </div>
+
+      <div id="qris" class="qris-section">
+        <h2 id="produkTitle"></h2>
+        <p id="produkHarga"></p>
+        <p>Pilih Metode Pembayaran:</p>
+        <button class="btn" onclick="tampilkanQRIS('Dana')">Dana</button>
+        <button class="btn" onclick="tampilkanQRIS('GoPay')">GoPay</button>
+        <button class="btn" onclick="tampilkanQRIS('QRIS')">QRIS</button>
+        <img id="imgQRIS" class="qris" style="display:none;">
+        <p id="scanText" style="display:none;"></p>
+        <button class="btn" onclick="kembaliKeProduk()">🔙 Kembali ke Produk</button>
+        <p style="margin-top: 20px; font-size: 13px; opacity: 0.7;">📅 <span id="tanggalSekarang"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="floating-btn music-floating" onclick="playMusic()">🎵</button>
+  <button class="floating-btn theme-floating" onclick="toggleTheme()">🌗</button>
+
+  <audio id="bgmusic" loop muted>
+    <source src="https://files.catbox.moe/yxwx8q.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickSound">
+    <source src="https://files.catbox.moe/c5dbps.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let currentProduk = "", currentHarga = "", currentNama = "";
+
+    const produkData = [
+      { nama: "Nokos WhatsApp", list: [{ nama: "Nokos Indo", harga: "Rp 5.000" }, { nama: "Nokos Filipina", harga: "Rp 6.000" }] },
+      { nama: "Script Obf", list: [{ nama: "Sc Obf No Enc", harga: "Rp 15.000" }] },
+      { nama: "Script NightRaid", list: [{ nama: "NightRaid No Up", harga: "Rp 15.000" }, { nama: "NightRaid Free Up", harga: "Rp 25.000" }, { nama: "NightRaid Resselr", harga: "Rp 30.000" }] },
+      { nama: "Base Telegram", list: [{ nama: "Base No Button", harga: "Rp 10.000" }, { nama: "Base Button", harga: "Rp 15.000" }] },
+      { nama: "Murid Alien", list: [{ nama: "Murid Nokos", harga: "Rp 3.000" }, { nama: "Murid Suntik", harga: "Rp 3.000" }] },
+      { nama: "Jasa Pembuatan Web", list: [{ nama: "Web simpel", harga: "Rp 5.000" }, { nama: "Web Kaya Aku", harga: "Rp 10.000" }] }
+    ];
+
+    function showTypingText() {
+      const input = document.getElementById("namaPembeli").value.trim();
+      const typingText = document.getElementById("typingText");
+      const lanjutBtn = document.getElementById("lanjutBtn");
+
+      if (input) {
+        lanjutBtn.style.display = "block";
+        typingText.innerText = "";
+        let i = 0;
+        const teks = "mengetik...";
+        const typingEffect = setInterval(() => {
+          if (i < teks.length) {
+            typingText.innerText += teks.charAt(i);
+            i++;
+          } else {
+            clearInterval(typingEffect);
+            setTimeout(() => {
+              typingText.innerText = "";
+            }, 1000);
+          }
+        }, 50);
+      } else {
+        typingText.innerText = "";
+        lanjutBtn.style.display = "none";
+      }
+    }
+
+    function lanjutkanNama() {
+      const nama = document.getElementById("namaPembeli").value.trim();
+      if (!nama || nama.length < 3 || !/^[a-zA-Z0-9\s]+$/.test(nama)) {
+        return alert("Masukkan nama yang valid.");
+      }
+      currentNama = nama;
+
+      // Hapus portofolio dari DOM
+      const portofolio = document.getElementById("portofolio");
+      if (portofolio) {
+        portofolio.remove();
+      }
+
+      tampilkanDaftarProduk();
+    }
+
+    function tampilkanDaftarProduk() {
+      hideAll();
+      const tabs = document.getElementById("produkTabs");
+      const content = document.getElementById("tabContent");
+      const subSection = document.getElementById("subProdukSection");
+
+      tabs.innerHTML = `<p>👋 Halo! Pilih kategori produk:</p>`;
+      content.innerHTML = "";
+      subSection.classList.remove("show", "fade");
+
+      produkData.forEach(p => {
+        const tabBtn = document.createElement("button");
+        tabBtn.className = "btn";
+        tabBtn.innerText = p.nama;
+        tabBtn.onclick = () => renderSubprodukTab(p.list);
+        tabs.appendChild(tabBtn);
+      });
+
+      document.getElementById("halamanMenuProduk").classList.add("show", "fade");
+      tabs.classList.add("show", "fade");
+    }
+
+    function renderSubprodukTab(daftar) {
+      const content = document.getElementById("tabContent");
+      const produkTabs = document.getElementById("produkTabs");
+      const subProdukSection = document.getElementById("subProdukSection");
+
+      content.innerHTML = "";
+      daftar.forEach((item, i) => {
+        const btn = document.createElement("button");
+        btn.className = "btn breathing fade";
+        btn.style.animationDelay = `${i * 0.1}s`;
+        btn.textContent = `${item.nama} (${item.harga})`;
+        btn.onclick = () => bukaQris(item.nama, item.harga);
+        content.appendChild(btn);
+      });
+
+      produkTabs.classList.remove("show", "fade");
+      subProdukSection.classList.add("show", "fade");
+    }
+
+    function bukaQris(namaProduk, harga) {
+      hideAll();
+      currentProduk = namaProduk;
+      currentHarga = harga;
+      const qris = document.getElementById("qris");
+      const title = document.getElementById("produkTitle");
+      const price = document.getElementById("produkHarga");
+
+      title.textContent = "⏳ Memuat produk...";
+      price.textContent = "";
+      qris.classList.add("show", "fade");
+
+      setTimeout(() => {
+        title.textContent = namaProduk;
+        price.textContent = harga;
+      }, 500);
+    }
+
+    function tampilkanQRIS(metode) {
+      const img = document.getElementById("imgQRIS");
+      const text = document.getElementById("scanText");
+      img.style.display = "none";
+      text.style.display = "block";
+      if (metode === "Dana") text.innerHTML = `Kirim ke nomor Dana: <b>085700769390</b>`;
+      else if (metode === "GoPay") text.innerHTML = `Kirim ke nomor GoPay: <b>085700769390</b>`;
+      else {
+        img.src = "https://files.catbox.moe/81wrab.jpg";
+        img.style.display = "block";
+        text.innerHTML = `Scan QR di atas untuk bayar via <b>QRIS</b>`;
+      }
+      text.innerHTML += `<br><br><a href="https://t.me/yuxzzalien" target="_blank" style="display:inline-block; margin-top:12px; font-weight:bold; color:#0ff;">💬 Hubungi Admin</a>`;
+    }
+
+    function kembaliKeProduk() {
+      hideAll();
+      tampilkanDaftarProduk();
+    }
+
+    function kembaliKeKategori() {
+      document.getElementById("subProdukSection").classList.remove("show", "fade");
+      document.getElementById("produkTabs").classList.add("show", "fade");
+    }
+
+    function hideAll() {
+      ["portofolio", "halamanMenuProduk", "qris"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("show", "fade");
+      });
+    }
+
+    function playMusic() {
+      const music = document.getElementById("bgmusic");
+      const btn = document.querySelector(".music-floating");
+      music.muted = false;
+      music.play().then(() => {
+        btn.innerText = "⏸️";
+      }).catch(() => alert("Klik dua kali jika tidak bunyi."));
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light-mode");
+    }
+
+    document.getElementById("tanggalSekarang").innerText = new Date().toLocaleDateString("id-ID", {
+      weekday: "long", year: "numeric", month: "long", day: "numeric"
+    });
+
+    const clickSound = document.getElementById("clickSound");
+    document.addEventListener("click", () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    });
+
+    window.onload = () => {
+      const hour = new Date().getHours();
+      if (hour >= 6 && hour <= 18) {
+        document.body.classList.add("light-mode");
+      }
+    };
+  </script>
+</body>
+</html>
